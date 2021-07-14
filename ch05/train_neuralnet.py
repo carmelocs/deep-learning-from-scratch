@@ -3,11 +3,16 @@ import sys, os
 sys.path.append(os.pardir)
 
 import numpy as np
-from dataset.mnist import load_mnist
+from dataset.mnist import load_mnist, _change_one_hot_label
+from tensorflow.keras.datasets.mnist import load_data
 from two_layer_net import TwoLayerNet
 
 # データの読み込み
-(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
+# (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
+(x_train, t_train), (x_test, t_test) = load_data()
+
+t_train = _change_one_hot_label(t_train)
+t_test = _change_one_hot_label(t_test)
 
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
